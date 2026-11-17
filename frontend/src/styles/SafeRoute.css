@@ -1,0 +1,817 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap");
+
+/* ================= SAFE ROUTE SHELL ================= */
+
+.saferoute {
+  --asphalt: #14161b;
+  --surface: #1e212a;
+  --surface-raised: #252830;
+  --hairline: #2e323d;
+  --fog: #c7cbd6;
+  --paper: #f3f5f8;
+  --caution: #ffb020;
+  --signal: #ff5722;
+  --route: #1976d2;
+  --emerald: #10b981;
+  --violet: #8b5cf6;
+
+  background: var(--asphalt);
+  color: var(--fog);
+  font-family: "Inter", system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.saferoute * {
+  box-sizing: border-box;
+}
+
+/* ================= HERO ================= */
+
+.sr-hero {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 32px 0;
+}
+
+.sr-hero-banner {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+}
+
+.sr-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sr-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 22, 27, 0.3) 0%,
+    rgba(20, 22, 27, 0.85) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 32px;
+  text-align: center;
+}
+
+.sr-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--caution);
+  margin-bottom: 8px;
+}
+
+.sr-hero-eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--emerald);
+  animation: srDotPulse 2s ease-out infinite;
+}
+
+@keyframes srDotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.sr-hero-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--paper);
+  margin: 0;
+}
+
+.sr-hero-sub {
+  font-size: 14px;
+  color: var(--fog);
+  opacity: 0.8;
+  margin: 6px 0 0;
+}
+
+/* ================= PLANNER PANEL ================= */
+
+.sr-planner {
+  max-width: 1280px;
+  margin: 28px auto 0;
+  padding: 0 32px;
+}
+
+.sr-planner-card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+}
+
+.sr-planner-header {
+  background: linear-gradient(135deg, rgba(25, 118, 210, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border-bottom: 1px solid var(--hairline);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sr-planner-header-icon {
+  font-size: 24px;
+}
+
+.sr-planner-header h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--paper);
+  margin: 0;
+}
+
+.sr-planner-body {
+  padding: 28px;
+}
+
+/* ================= INPUT ROW ================= */
+
+.sr-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* Input groups need a stacking context so their absolute-positioned
+   suggestion dropdowns always float above everything else in the card */
+.sr-input-group {
+  position: relative;
+  /* No z-index here — let focus-within handle elevation */
+}
+
+.sr-input-group:focus-within {
+  z-index: 100;
+}
+
+/* Find Route button aligns to the bottom of its cell to match inputs */
+.sr-find-btn-wrap {
+  align-self: flex-end;
+  padding-top: 24px; /* matches label height so button sits level with inputs */
+}
+
+.sr-input-label {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fog);
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.sr-input-wrap {
+  position: relative;
+}
+
+.sr-input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sr-input {
+  width: 100%;
+  background: var(--asphalt);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 12px 16px 12px 42px;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: var(--paper);
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sr-input::placeholder {
+  color: var(--fog);
+  opacity: 0.4;
+}
+
+.sr-input:focus {
+  border-color: var(--route);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
+}
+
+/* ================= SUGGESTIONS ================= */
+
+.sr-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  /* Must exceed any Bootstrap/navbar z-index to float above everything */
+  z-index: 9999;
+  background: var(--surface-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  max-height: 240px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 4px;
+  margin: 0;
+}
+
+.sr-suggestions::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sr-suggestions::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sr-suggestions::-webkit-scrollbar-thumb {
+  background: var(--hairline);
+  border-radius: 3px;
+}
+
+.sr-suggestion-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.sr-suggestion-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sr-suggestion-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.sr-suggestion-detail {
+  font-size: 12px;
+  color: var(--fog);
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
+/* ================= FIND ROUTE BUTTON ================= */
+
+.sr-find-btn {
+  align-self: flex-end;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--emerald), #059669);
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  white-space: nowrap;
+  /* Align button baseline with the input fields (label height = ~28px) */
+  margin-top: 28px;
+}
+
+.sr-find-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+}
+
+.sr-find-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ================= ROUTE SUMMARY ================= */
+
+.sr-summary {
+  margin-top: 24px;
+  background: rgba(25, 118, 210, 0.06);
+  border: 1px solid rgba(25, 118, 210, 0.15);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+
+.sr-summary-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--paper);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-summary-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.sr-summary-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sr-summary-stat-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fog);
+  opacity: 0.6;
+}
+
+.sr-summary-stat-value {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--paper);
+}
+
+/* ================= RISK ANALYSIS ================= */
+
+.sr-risk {
+  margin-top: 20px;
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+
+.sr-risk--low {
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.sr-risk--medium {
+  background: rgba(255, 176, 32, 0.06);
+  border: 1px solid rgba(255, 176, 32, 0.2);
+}
+
+.sr-risk--high {
+  background: rgba(255, 87, 34, 0.06);
+  border: 1px solid rgba(255, 87, 34, 0.2);
+}
+
+.sr-risk-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--paper);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-risk-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.sr-risk-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sr-risk-item-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fog);
+  opacity: 0.6;
+}
+
+.sr-risk-item-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.sr-risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sr-risk-badge--low {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.sr-risk-badge--medium {
+  background: rgba(255, 176, 32, 0.15);
+  color: #fcd34d;
+}
+
+.sr-risk-badge--high {
+  background: rgba(255, 87, 34, 0.15);
+  color: #ff8a65;
+}
+
+.sr-risk-recommendation {
+  font-size: 14px;
+  color: var(--fog);
+  margin: 12px 0 0;
+  line-height: 1.5;
+}
+
+.sr-risk-alt-btn {
+  margin-top: 14px;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 87, 34, 0.3);
+  border-radius: 10px;
+  background: rgba(255, 87, 34, 0.08);
+  color: #ff8a65;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.sr-risk-alt-btn:hover {
+  background: rgba(255, 87, 34, 0.15);
+  border-color: rgba(255, 87, 34, 0.5);
+}
+
+/* ================= SAFER ALTERNATIVE ================= */
+
+.sr-safer {
+  margin-top: 20px;
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+
+.sr-safer-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #34d399;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-safer-desc {
+  font-size: 14px;
+  color: var(--fog);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.sr-safer-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.sr-safer-use-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--emerald), #059669);
+  color: white;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sr-safer-use-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+}
+
+/* ================= CHECKING ALTERNATIVES ================= */
+
+.sr-checking {
+  margin-top: 16px;
+  padding: 14px 20px;
+  background: var(--surface-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  color: var(--fog);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sr-checking-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--hairline);
+  border-top-color: var(--route);
+  border-radius: 50%;
+  animation: srSpin 0.8s linear infinite;
+}
+
+@keyframes srSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================= JOURNEY CONTROLS ================= */
+
+.sr-journey-controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sr-journey-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-journey-btn--start {
+  background: linear-gradient(135deg, var(--route), #1565c0);
+  color: white;
+}
+
+.sr-journey-btn--start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.3);
+}
+
+.sr-journey-btn--stop {
+  background: rgba(255, 87, 34, 0.1);
+  border: 1px solid rgba(255, 87, 34, 0.3);
+  color: #ff8a65;
+}
+
+.sr-journey-btn--stop:hover {
+  background: rgba(255, 87, 34, 0.2);
+}
+
+/* ================= LIVE JOURNEY BANNER ================= */
+
+.sr-journey-banner {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: rgba(25, 118, 210, 0.08);
+  border: 1px solid rgba(25, 118, 210, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sr-journey-banner-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.sr-journey-banner-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+/* ================= TURN-BY-TURN DIRECTIONS ================= */
+
+.sr-directions {
+  margin-top: 24px;
+  background: var(--asphalt);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.sr-directions-header {
+  background: var(--surface-raised);
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sr-directions-header h5 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--paper);
+  margin: 0;
+}
+
+.sr-directions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sr-direction-step {
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--fog);
+  transition: background 0.15s ease;
+}
+
+.sr-direction-step:last-child {
+  border-bottom: none;
+}
+
+.sr-direction-step--active {
+  background: rgba(25, 118, 210, 0.08);
+  color: var(--paper);
+}
+
+.sr-direction-number {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fog);
+  flex-shrink: 0;
+}
+
+.sr-direction-step--active .sr-direction-number {
+  background: rgba(25, 118, 210, 0.15);
+  border-color: rgba(25, 118, 210, 0.3);
+  color: #42a5f5;
+}
+
+.sr-direction-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.sr-direction-distance {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--fog);
+  opacity: 0.5;
+  white-space: nowrap;
+}
+
+/* ================= MAP SECTION ================= */
+
+.sr-map-section {
+  max-width: 1280px;
+  margin: 28px auto 0;
+  padding: 0 32px 48px;
+}
+
+.sr-map-container {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Medium screens: stack inputs 2-column, button full-width below */
+@media (max-width: 900px) {
+  .sr-input-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .sr-input-row > .sr-input-group:first-child {
+    grid-column: 1;
+  }
+
+  .sr-input-row > .sr-input-group:nth-child(2) {
+    grid-column: 2;
+  }
+
+  /* Find Route button spans both columns */
+  .sr-input-row > .sr-find-btn,
+  .sr-input-row > button {
+    grid-column: 1 / -1;
+    width: 100%;
+    align-self: auto;
+    margin-top: 4px;
+  }
+}
+
+/* Small screens: everything stacks to single column */
+@media (max-width: 600px) {
+  .sr-hero {
+    padding: 16px 12px 0;
+  }
+
+  .sr-hero-banner {
+    height: 140px;
+    border-radius: 12px;
+  }
+
+  .sr-hero-title {
+    font-size: 20px;
+  }
+
+  .sr-hero-sub {
+    font-size: 13px;
+  }
+
+  .sr-planner {
+    padding: 0 12px;
+  }
+
+  .sr-planner-body {
+    padding: 16px;
+  }
+
+  .sr-input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sr-input-row > .sr-input-group:first-child,
+  .sr-input-row > .sr-input-group:nth-child(2) {
+    grid-column: 1;
+  }
+
+  .sr-input-row > .sr-find-btn,
+  .sr-input-row > button {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .sr-summary-stats,
+  .sr-risk-grid,
+  .sr-safer-stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sr-map-section {
+    padding: 0 12px 24px;
+  }
+
+  .sr-direction-step {
+    padding: 12px 16px;
+  }
+}
+
+/* ================= ACCESSIBILITY ================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-hero-eyebrow-dot,
+  .sr-checking-spinner {
+    animation: none !important;
+  }
+}
